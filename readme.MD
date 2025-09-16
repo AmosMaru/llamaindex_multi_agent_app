@@ -36,20 +36,25 @@ The app supports multiple sessions with memory.
 
 ```
 llamaindex_multi_agent_app/
+├── .gitignore
 ├── app/
-│   ├── main.py          # FastAPI entrypoint
-│   ├── config.py        # Config and logging
-│   ├── models.py        # Pydantic models
-│   ├── utils.py         # Session helpers
-│   ├── workflow.py      # Workflow setup
-│   ├── agents.py        # Agents + tools
-│   ├── routes/          # API routes
+│   ├── __init__.py
+│   ├── agents/
+│   │   ├── agents.py
+│   │   ├── tools.py
+│   │   └── workflow.py
+│   ├── config.py
+│   ├── main.py
+│   ├── models.py
+│   ├── routes/
+│   │   ├── __init__.py
 │   │   ├── chat.py
 │   │   ├── sessions.py
 │   │   └── stats.py
-├── run.py               # Uvicorn runner
-├── requirements.txt     # Dependencies
-├── .env                 # API keys
+│   └── utils.py
+├── readme.MD
+├── requirements.txt
+└── run.py
 ```
 
 ---
