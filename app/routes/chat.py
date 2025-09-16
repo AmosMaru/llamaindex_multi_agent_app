@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException
 from datetime import datetime
 from ..models import ChatRequest, ChatResponse
 from ..utils import create_session_id, get_or_create_context, save_context
-from ..workflow import agent_workflow
+from ..agents.workflow import agent_workflow
 from ..config import logger
 
 router = APIRouter()

@@ -2,7 +2,7 @@ import uuid
 from datetime import datetime
 from typing import Dict
 from llama_index.core.workflow import Context, JsonSerializer
-from .workflow import agent_workflow
+from .agents.workflow import agent_workflow
 from .config import logger, context_collection, metadata_collection
 
 # In-memory cache (optional, for faster access)

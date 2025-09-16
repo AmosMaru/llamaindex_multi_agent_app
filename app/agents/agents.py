@@ -1,16 +1,11 @@
 from llama_index.llms.openai import OpenAI
 from llama_index.core.agent.workflow import FunctionAgent
-from .config import OPENAI_API_KEY, TAVILY_API_KEY, logger
-from tavily import AsyncTavilyClient
+from app.agents.tools import search_web
+from ..config import OPENAI_API_KEY
 
 # Init LLM
 llm = OpenAI(model="gpt-4o-mini", api_key=OPENAI_API_KEY)
 
-# Tool: Web search
-async def search_web(query: str) -> str:
-    logger.info(f"Web search triggered for query: {query}")
-    client = AsyncTavilyClient(api_key=TAVILY_API_KEY)
-    return str(await client.search(query))
 
 # Agents
 research_agent = FunctionAgent(
