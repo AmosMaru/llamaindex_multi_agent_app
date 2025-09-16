@@ -1,17 +1,4 @@
-from fastapi import FastAPI
-from .routes import chat, sessions, stats
+import uvicorn
 
-app = FastAPI(
-    title="Multi-Agent Workflow API",
-    description="FastAPI application with multi-agent workflow and memory",
-    version="1.0.0"
-)
-
-@app.get("/")
-async def root():
-    return {"message": "Multi-Agent Workflow API is running", "status": "healthy"}
-
-# Routers
-app.include_router(chat.router)
-app.include_router(sessions.router)
-app.include_router(stats.router)
+if __name__ == "__main__":
+    uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)
