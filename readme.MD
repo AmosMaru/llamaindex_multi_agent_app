@@ -20,6 +20,7 @@ The app supports multiple sessions with memory.
 
   * Create, list, delete, and restore sessions
   * In-memory context storage
+  * Mongodb context memory storage
 
 * **Endpoints**
 
