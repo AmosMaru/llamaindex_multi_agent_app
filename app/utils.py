@@ -15,13 +15,13 @@ def create_session_id() -> str:
     return session_id
 
 def get_or_create_context(session_id: str) -> Context:
-    # 1️⃣ First check in-memory
+    # 1  First check in-memory
     if session_id in session_contexts:
         logger.info(f"Restoring context from memory for session {session_id}")
         ctx_dict = session_contexts[session_id]
         return Context.from_dict(agent_workflow, ctx_dict, serializer=JsonSerializer())
 
-    # 2️⃣ Then check MongoDB
+    # 2 Then check MongoDB
     db_record = context_collection.find_one({"session_id": session_id})
     if db_record:
         logger.info(f"Restoring context from MongoDB for session {session_id}")
@@ -29,7 +29,7 @@ def get_or_create_context(session_id: str) -> Context:
         session_contexts[session_id] = ctx_dict
         return Context.from_dict(agent_workflow, ctx_dict, serializer=JsonSerializer())
 
-    # 3️⃣ Otherwise create new
+    # 3 Otherwise create new
     logger.info(f"Creating new context for session {session_id}")
     ctx = Context(agent_workflow)
     metadata = {
