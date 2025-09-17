@@ -3,30 +3,31 @@
 
 This project is a **FastAPI application** that runs a **multi-agent workflow** using [LlamaIndex](https://docs.llamaindex.ai/), OpenAI models, and Tavily search.
 It allows you to chat with a coordinator agent that delegates tasks to specialized agents (Research, Write, Review).
-The app supports multiple sessions with memory.
-
-
+The app supports multiple sessions with memory and document processing capabilities.
 
 ## Features
 
 * **Multi-agent workflow**:
+  * **MainAgent** – Coordinator that delegates to specialized agents
+  * **ResearchAgent** – Gathers and analyzes information using web search
+  * **WriteAgent** – Drafts structured reports and content
+  * **ReviewAgent** – Reviews reports and provides improvements
 
-  * ResearchAgent – gathers and analyzes information
-  * WriteAgent – drafts structured reports
-  * ReviewAgent – reviews reports and provides improvements
-  * MainAgent – coordinates everything
+* **Document Processing**:
+  * File upload support via `/chat` endpoint
+  * Document conversion using Docling (PDF, Word, etc.)
+  * Automatic extraction to markdown format
+  * RAG pipeline ready (extraction, chunking, embedding, searching)
 
-* **Session management**
-
+* **Session Management**:
   * Create, list, delete, and restore sessions
-  * In-memory context storage
-  * Mongodb context memory storage
+  * Persistent context storage with MongoDB
+  * Session-based memory across conversations
 
-* **Endpoints**
-
-  * `POST /chat` – Send a message and get a response
-  * `GET /sessions` – List all sessions
-  * `GET /sessions/{id}` – Get info for one session
+* **API Endpoints**:
+  * `POST /chat` – Send messages and upload files for processing
+  * `GET /sessions` – List all active sessions
+  * `GET /sessions/{id}` – Get information for a specific session
   * `DELETE /sessions/{id}` – Delete a session
   * `GET /stats` – App usage statistics
   * `GET /` – Health check
@@ -37,25 +38,25 @@ The app supports multiple sessions with memory.
 
 ```
 llamaindex_multi_agent_app/
-├── .gitignore
-├── app/
+├── .env                          # Environment variables
+├── .gitignore                    # Git ignore file
+├── app/                          # Main application package
 │   ├── __init__.py
-│   ├── agents/
-│   │   ├── agents.py
-│   │   ├── tools.py
-│   │   └── workflow.py
-│   ├── config.py
-│   ├── main.py
-│   ├── models.py
-│   ├── routes/
+│   ├── agents/                   # Agent definitions and workflow
+│   │   ├── agents.py            # Agent implementations (Main, Research, Write, Review)
+│   │   ├── tools.py             # Tools for agents (web search, etc.)
+│   │   └── workflow.py          # Agent workflow configuration
+│   ├── config.py                # Configuration and environment setup
+│   ├── models.py                # Pydantic models for API
+│   ├── routes/                  # FastAPI route handlers
 │   │   ├── __init__.py
-│   │   ├── chat.py
-│   │   ├── sessions.py
-│   │   └── stats.py
-│   └── utils.py
-├── readme.MD
-├── requirements.txt
-└── run.py
+│   │   ├── chat.py              # Chat endpoint with file upload
+│   │   ├── sessions.py          # Session management endpoints
+│   │   └── stats.py             # Statistics endpoints
+│   └── utils.py                 # Utility functions
+├── readme.MD                    # This file
+├── requirements.txt             # Python dependencies
+└── run.py                       # Application entry point
 ```
 
 ---
