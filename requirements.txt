@@ -5,3 +5,5 @@ python-dotenv
 llama-index
 tavily-python
 motor
+python-multipart
+docling
