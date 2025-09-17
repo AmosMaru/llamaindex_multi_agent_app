@@ -38,6 +38,12 @@ async def chat(
                 markdown_output = document.export_to_markdown()
                 logger.info(f"Extracted {len(markdown_output)} characters from {file.filename}")
                 #TODO: you can set up a RAG Pipeline here with the markdown_output
+                # RAG Pipeline:
+                # 1. Extraction
+                # 2. Chunking
+                # 3. Embedding
+                # 4. Searching
+                # 5. Answering/chatting
 
 
             except Exception as e:
