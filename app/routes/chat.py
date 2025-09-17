@@ -6,6 +6,7 @@ from ..utils import create_session_id, get_or_create_context, save_context
 from ..agents.workflow import agent_workflow
 from ..config import logger
 from docling.document_converter import DocumentConverter
+from llama_index.core.llms import ChatMessage
 
 router = APIRouter()
 converter = DocumentConverter()
@@ -23,6 +24,8 @@ async def chat(
 
         logger.info(f"Session {session_id} - User message: {request.message}")
         
+        chat_history = []
+
         # Handle file upload
         if file:
             logger.info(f"Processing uploaded file: {file.filename}")
@@ -44,13 +47,19 @@ async def chat(
                 # 3. Embedding
                 # 4. Searching
                 # 5. Answering/chatting
-
-
+                
+                # Inject file context into chat history
+                chat_history.append(
+                    ChatMessage(
+                        role="assistant",
+                        content=f"Here is the extracted document context:\n\n{markdown_output}"
+                    )
+                )
             except Exception as e:
                 logger.error(f"Docling conversion failed: {str(e)}", exc_info=True)
                 raise HTTPException(status_code=400, detail="Invalid file format")
 
-        response = await agent_workflow.run(user_msg=request.message, ctx=ctx)
+        response = await agent_workflow.run(user_msg=request.message, ctx=ctx, chat_history=chat_history)
 
         logger.info(f"Session {session_id} - Final response: {response}")
 
